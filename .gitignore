@@ -1,6 +1,6 @@
 # compiled output
-/dist
-/node_modules
+/stream-backend/dist
+/stream-backend/node_modules
 /build
 
 # Logs
