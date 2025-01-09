@@ -64,6 +64,11 @@ export class VerificationService {
       TokenType.EMAIL_VERIFY,
       true,
     );
+
+    await this.mailService.sendVerificationToken(
+      user.email,
+      verification.token,
+    );
     return true;
   }
 }

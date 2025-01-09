@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   InternalServerErrorException,
@@ -16,6 +17,8 @@ import {
   destroySession,
   saveSession,
 } from "../../../shared/utils/session.util";
+import { VerificationService } from "../verification/verification.service";
+import { TOTP } from "otpauth";
 
 @Injectable()
 export class SessionService {
@@ -23,6 +26,7 @@ export class SessionService {
     private readonly prismaService: PrismaService,
     private readonly configService: ConfigService,
     private readonly redisService: RedisService,
+    private readonly verificationService: VerificationService,
   ) {}
 
   async findByUser(req: Request) {
@@ -65,7 +69,7 @@ export class SessionService {
     };
   }
   async login(req: Request, input: LoginInput, userAgent: string) {
-    const { login, password } = input;
+    const { login, password, pin } = input;
     const user = await this.prismaService.user.findFirst({
       where: {
         OR: [{ username: { equals: login } }, { email: { equals: login } }],
@@ -79,6 +83,32 @@ export class SessionService {
       throw new UnauthorizedException("Неверный пароль");
     }
 
+    if (!user.isEmailVerified) {
+      await this.verificationService.sendVerificationToken(user);
+      throw new BadRequestException(
+        "Аккаунт не верифирован. Пожалуйста, проверьте свою почту для  подтверждения",
+      );
+    }
+
+    if (user.isTotpEnabled) {
+      if (!pin) {
+        return {
+          message: "Необходим код для завершения авторизации",
+        };
+      }
+      const totp = new TOTP({
+        issuer: "PricidonStream",
+        label: `${user.email}`,
+        algorithm: "SHA1",
+        digits: 6,
+        secret: user.totpSecret,
+      });
+
+      const delta = totp.validate({ token: pin });
+      if (delta === null) {
+        throw new BadRequestException("Неверный код");
+      }
+    }
     const metadata = getSessionMetadata(req, userAgent);
 
     return saveSession(req, user, metadata);

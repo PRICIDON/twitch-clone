@@ -3,13 +3,13 @@ import { VerificationService } from "./verification.service";
 import { GqlContext } from "../../../shared/types/gql-context.types";
 import { VerificationInput } from "./inputs/verification.input";
 import { UserAgent } from "../../../shared/decocators/user-agent.decorator";
-import { UserModel } from "../account/models/user.module";
+import { AuthModel } from "../account/models/auth.model";
 
 @Resolver("Verification")
 export class VerificationResolver {
   constructor(private readonly verificationService: VerificationService) {}
 
-  @Mutation(() => UserModel, { name: "verifyAccount" })
+  @Mutation(() => AuthModel, { name: "verifyAccount" })
   async verify(
     @Context() { req }: GqlContext,
     @Args("data") input: VerificationInput,
