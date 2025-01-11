@@ -5,6 +5,8 @@ import { render } from "@react-email/components";
 import { VerificationTemplate } from "./templates/verification.template";
 import { PasswordRecoveryTemplate } from "./templates/password-recovery.template";
 import type { SessionMetadata } from "../../../shared/types/session-metadata.types";
+import { DeactivateTemplate } from "./templates/deactivate.template";
+import { AccountDeletionTemplate } from "./templates/account-deletion.template";
 
 @Injectable()
 export class MailService {
@@ -32,5 +34,20 @@ export class MailService {
       PasswordRecoveryTemplate({ domain, token, metadata }),
     );
     return this.sendMail(email, "Сброс пароля", html);
+  }
+
+  async sendDeactivateToken(
+    email: string,
+    token: string,
+    metadata: SessionMetadata,
+  ) {
+    const html = await render(DeactivateTemplate({ token, metadata }));
+    return this.sendMail(email, "Деактивация аккаунта", html);
+  }
+
+  async sendAccountDeletion(email: string) {
+    const domain = this.configService.getOrThrow("ALLOWED_ORIGIN");
+    const html = await render(AccountDeletionTemplate({ domain }));
+    return this.sendMail(email, "Аккаунт удален", html);
   }
 }

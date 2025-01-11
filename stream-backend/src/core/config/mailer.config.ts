@@ -13,7 +13,7 @@ export function getMailerConfig(configService: ConfigService): MailerOptions {
       },
     },
     defaults: {
-      from: `"TeaStream" ${configService.getOrThrow("MAIL_LOGIN")}`,
+      from: `"PricidonStream" ${configService.getOrThrow("MAIL_LOGIN")}`,
     },
   };
 }

@@ -22,16 +22,20 @@ export class UserModel implements User {
   bio: string;
 
   @Field(() => Boolean)
-  public isVerified: boolean;
+  isVerified: boolean;
 
   @Field(() => Boolean)
-  public isEmailVerified: boolean;
+  isEmailVerified: boolean;
+
+  @Field(() => Boolean)
+  isDeactivated: boolean;
+  @Field(() => Date)
+  deactivatedAt: Date;
 
   @Field(() => Boolean)
   isTotpEnabled: boolean;
   @Field(() => String, { nullable: true })
   totpSecret: string;
-  // TODO: Понять почему выдает ошибку"!
   @Field(() => Date)
   createdAt: Date;
   @Field(() => Date)

@@ -1,19 +1,23 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { PrismaService } from "../../../core/prisma/prisma.service";
-import type { User } from "../../../../prisma/generated";
-import { encode } from "hi-base32";
 import { randomBytes } from "crypto";
+import { encode } from "hi-base32";
 import { TOTP } from "otpauth";
 import * as QRCode from "qrcode";
+
+import type { User } from "../../../../prisma/generated";
+import { PrismaService } from "../../../core/prisma/prisma.service";
+
 import { EnableTotpInput } from "./inputs/enable-totp.input";
+
 @Injectable()
 export class TotpService {
-  constructor(private readonly prismaService: PrismaService) {}
+  public constructor(private readonly prismaService: PrismaService) {}
 
-  async generate(user: User) {
+  public async generate(user: User) {
     const secret = encode(randomBytes(15)).replace(/=/g, "").substring(0, 24);
+
     const totp = new TOTP({
-      issuer: "PricidonStream",
+      issuer: "TeaStream",
       label: `${user.email}`,
       algorithm: "SHA1",
       digits: 6,
@@ -23,14 +27,14 @@ export class TotpService {
     const otpauthUrl = totp.toString();
     const qrcodeUrl = await QRCode.toDataURL(otpauthUrl);
 
-    return { qrcodeUrl, otpauthUrl };
+    return { qrcodeUrl, secret };
   }
 
-  async enable(user: User, input: EnableTotpInput) {
+  public async enable(user: User, input: EnableTotpInput) {
     const { secret, pin } = input;
 
     const totp = new TOTP({
-      issuer: "PricidonStream",
+      issuer: "TeaStream",
       label: `${user.email}`,
       algorithm: "SHA1",
       digits: 6,
@@ -38,9 +42,11 @@ export class TotpService {
     });
 
     const delta = totp.validate({ token: pin });
+
     if (delta === null) {
       throw new BadRequestException("Неверный код");
     }
+
     await this.prismaService.user.update({
       where: {
         id: user.id,
@@ -54,7 +60,7 @@ export class TotpService {
     return true;
   }
 
-  async disable(user: User) {
+  public async disable(user: User) {
     await this.prismaService.user.update({
       where: {
         id: user.id,
@@ -64,6 +70,7 @@ export class TotpService {
         totpSecret: null,
       },
     });
+
     return true;
   }
 }
