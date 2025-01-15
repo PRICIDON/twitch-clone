@@ -46,6 +46,7 @@
     "express-session": "^1.18.1",
     "geoip-lite": "^1.4.10",
     "graphql": "^16.10.0",
+    "graphql-upload": "^14.0.0",
     "hi-base32": "^0.5.1",
     "i18n-iso-countries": "^7.13.0",
     "ioredis": "^5.4.2",
@@ -53,7 +54,8 @@
     "qrcode": "^1.5.4",
     "react-dom": "^19.0.0",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -63,6 +65,7 @@
     "@types/express": "^5.0.0",
     "@types/express-session": "^1.18.1",
     "@types/geoip-lite": "^1.4.4",
+    "@types/graphql-upload": "^17.0.0",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
     "@types/qrcode": "^1.5.5",

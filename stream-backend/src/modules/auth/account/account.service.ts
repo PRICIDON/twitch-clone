@@ -19,9 +19,12 @@ export class AccountService {
   ) {}
 
   async me(id: string) {
-    return await this.prismaService.user.findUnique({
+    return this.prismaService.user.findUnique({
       where: {
         id,
+      },
+      include: {
+        socialLink: true,
       },
     });
   }
@@ -49,6 +52,11 @@ export class AccountService {
         email,
         password: await hash(password),
         displayName: username,
+        stream: {
+          create: {
+            title: `Стрим ${username}`,
+          },
+        },
       },
     });
 

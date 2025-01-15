@@ -15,6 +15,8 @@ import { TotpModule } from "../modules/auth/totp/totp.module";
 import { DeactivateModule } from "../modules/auth/deactivate/deactivate.module";
 import { CronModule } from "../modules/auth/cron/cron.module";
 import { StorageModule } from "../modules/libs/storage/storage.module";
+import { ProfileModule } from "../modules/auth/profile/profile.module";
+import { StreamModule } from "../modules/stream/stream.module";
 
 @Module({
   imports: [
@@ -39,6 +41,8 @@ import { StorageModule } from "../modules/libs/storage/storage.module";
     DeactivateModule,
     CronModule,
     StorageModule,
+    ProfileModule,
+    StreamModule,
   ],
 })
 export class CoreModule {}
