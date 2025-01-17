@@ -5,10 +5,12 @@ import { FiltersInput } from "./inputs/filters.input";
 import { Authorized } from "../../shared/decocators/authorized.decorator";
 import type { User } from "../../../prisma/generated";
 import { ChangeStreamInfoInput } from "./inputs/change-stream-info.input";
-import * as GraphQLUpload from "graphql-upload/GraphQLUpload";
 import { FileValidationPipe } from "../../shared/pipes/file-validation.pipe";
-import * as Upload from "graphql-upload/Upload";
 import { Authorization } from "../../shared/decocators/auth.decorator";
+import * as Upload from "graphql-upload/Upload.js";
+import * as GraphQLUpload from "graphql-upload/GraphQLUpload.js";
+import { GenerateStreamTokenInput } from "./inputs/generate-stream-token.input";
+import { GenerateTokenModel } from "./models/generate-token.model";
 
 @Resolver("Stream")
 export class StreamResolver {
@@ -45,5 +47,10 @@ export class StreamResolver {
   @Mutation(() => Boolean, { name: "removeStreamThumbnail" })
   async removeThumbnail(@Authorized() user: User) {
     return this.streamService.removeThumbnail(user);
+  }
+
+  @Mutation(() => GenerateTokenModel, { name: "generateStreamToken" })
+  async generateToken(@Args("data") input: GenerateStreamTokenInput) {
+    return this.streamService.generateToken(input);
   }
 }

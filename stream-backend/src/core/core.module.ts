@@ -17,6 +17,10 @@ import { CronModule } from "../modules/auth/cron/cron.module";
 import { StorageModule } from "../modules/libs/storage/storage.module";
 import { ProfileModule } from "../modules/auth/profile/profile.module";
 import { StreamModule } from "../modules/stream/stream.module";
+import { LivekitModule } from "../modules/libs/livekit/livekit.module";
+import { getLiveKitConfig } from "./config/livekit.config";
+import { IngressModule } from "../modules/stream/ingress/ingress.module";
+import { CategoryModule } from "../modules/category/category.module";
 
 @Module({
   imports: [
@@ -28,6 +32,11 @@ import { StreamModule } from "../modules/stream/stream.module";
       driver: ApolloDriver,
       imports: [ConfigModule],
       useFactory: getGraphQLConfig,
+      inject: [ConfigService],
+    }),
+    LivekitModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: getLiveKitConfig,
       inject: [ConfigService],
     }),
     PrismaModule,
@@ -43,6 +52,8 @@ import { StreamModule } from "../modules/stream/stream.module";
     StorageModule,
     ProfileModule,
     StreamModule,
+    IngressModule,
+    CategoryModule,
   ],
 })
 export class CoreModule {}
