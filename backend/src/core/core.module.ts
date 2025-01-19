@@ -29,6 +29,9 @@ import { TelegramModule } from "src/modules/libs/telegram/telegram.module";
 import Stripe from "stripe";
 import { StripeModule } from "../modules/libs/stripe/stripe.module";
 import { getStripeConfig } from "./config/stripe.config";
+import { SubscriptionModule } from "../modules/sponsorship/subscription/subscription.module";
+import { PlanModule } from "../modules/sponsorship/plan/plan.module";
+import { TransactionModule } from "../modules/sponsorship/transaction/transaction.module";
 
 @Module({
   imports: [
@@ -72,6 +75,9 @@ import { getStripeConfig } from "./config/stripe.config";
     ChannelModule,
     NotificationModule,
     TelegramModule,
+    PlanModule,
+    TransactionModule,
+    SubscriptionModule,
   ],
 })
 export class CoreModule {}
