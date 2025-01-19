@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "npm",
+            "name": "prisma studio",
+            "command": "run",
+            "scripts": "db:studio"
+        },
+        {
+            "type": "npm",
+            "name": "start dev",
+            "command": "run",
+            "scripts": "start:dev"
+        },
+        {
+            "type": "npm",
+            "name": "db push",
+            "command": "run",
+            "scripts": "db:push"
+        },
+    ]
+}

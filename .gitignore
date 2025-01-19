@@ -1,6 +1,6 @@
 # compiled output
-/stream-backend/dist
-/stream-backend/node_modules
+/backend/dist
+/backend/node_modules
 /build
 
 # Logs
@@ -21,12 +21,15 @@ lerna-debug.log*
 
 # IDEs and editors
 /.idea
+/backend/.idea
 .project
 .classpath
 .c9/
 *.launch
 .settings/
 *.sublime-workspace
+/backend/.fleet
+/.fleet
 
 # IDE - VSCode
 .vscode/*
