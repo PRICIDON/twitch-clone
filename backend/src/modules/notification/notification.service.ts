@@ -96,7 +96,7 @@ export class NotificationService {
   }
 
   public async createEnableTwoFactor(userId: string) {
-    const notification = await this.prismaService.notification.create({
+    return this.prismaService.notification.create({
       data: {
         message: `<b className='font-medium'>Обеспечьте свою безопасность!</b>
 				<p>Включите двухфакторную аутентификацию в настройках вашего аккаунта, чтобы повысить уровень защиты.</p>`,
@@ -104,12 +104,10 @@ export class NotificationService {
         userId,
       },
     });
-
-    return notification;
   }
 
   public async createVerifyChannel(userId: string) {
-    const notification = await this.prismaService.notification.create({
+    return this.prismaService.notification.create({
       data: {
         message: `<b className='font-medium'>Поздравляем!</b>
 			  <p>Ваш канал верифицирован, и теперь рядом с вашим каналом будет галочка.</p>`,
@@ -117,8 +115,6 @@ export class NotificationService {
         userId,
       },
     });
-
-    return notification;
   }
 
   async changeSettings(user: User, input: ChangeNotificationsSettingsInput) {

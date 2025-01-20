@@ -73,7 +73,7 @@ export function DeactivateTemplate({
                 href="mailto:help@pricidon.ru"
                 className="text-[#18b9ae] underline"
               >
-                help@teastream.ru
+                help@pricidon.ru
               </Link>
               .
             </Text>

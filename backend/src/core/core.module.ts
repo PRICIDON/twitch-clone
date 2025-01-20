@@ -13,7 +13,7 @@ import { MailModule } from "../modules/libs/mail/mail.module";
 import { PasswordRecoveryModule } from "../modules/auth/password-recovery/password-recovery.module";
 import { TotpModule } from "../modules/auth/totp/totp.module";
 import { DeactivateModule } from "../modules/auth/deactivate/deactivate.module";
-import { CronModule } from "../modules/auth/cron/cron.module";
+import { CronModule } from "../modules/cron/cron.module";
 import { StorageModule } from "../modules/libs/storage/storage.module";
 import { ProfileModule } from "../modules/auth/profile/profile.module";
 import { StreamModule } from "../modules/stream/stream.module";

@@ -31,8 +31,8 @@ export function AccountDeletionTemplate({
               Ваш аккаунт был полностью удалён
             </Heading>
             <Text className="text-base text-black mt-2">
-              Ваш аккаунт был полностью стерт из базы данных TeaStream. Все ваши
-              данные и информация были удалены безвозвратно.
+              Ваш аккаунт был полностью стерт из базы данных PricidonStream. Все
+              ваши данные и информация были удалены безвозвратно.
             </Text>
           </Section>
 
@@ -48,7 +48,7 @@ export function AccountDeletionTemplate({
               href={registerLink}
               className="inline-flex justify-center items-center rounded-md mt-2 text-sm font-medium text-white bg-[#18B9AE] px-5 py-2 rounded-full"
             >
-              Зарегистрироваться на Teastream
+              Зарегистрироваться на PricidonStream
             </Link>
           </Section>
 
