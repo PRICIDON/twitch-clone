@@ -6,7 +6,7 @@ export class ChannelService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async findRecommendedChannel() {
-    const channels = await this.prismaService.user.findMany({
+    return this.prismaService.user.findMany({
       where: {
         isDeactivated: false,
       },
@@ -20,7 +20,6 @@ export class ChannelService {
       },
       take: 7,
     });
-    return channels;
   }
 
   async findByUsername(username: string) {
@@ -51,13 +50,37 @@ export class ChannelService {
   }
 
   async findFollowersCountByChannel(channelId: string) {
-    const followers = await this.prismaService.follow.count({
+    return this.prismaService.follow.count({
       where: {
         following: {
           id: channelId,
         },
       },
     });
-    return followers;
+  }
+
+  async findSponsorsByChannel(channelId: string) {
+    const channel = await this.prismaService.user.findUnique({
+      where: {
+        id: channelId,
+      },
+    });
+    if (!channel) {
+      throw new NotFoundException("Канал не найден");
+    }
+
+    return this.prismaService.sponsorshipSubscription.findMany({
+      where: {
+        channelId: channel.id,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        plan: true,
+        user: true,
+        channel: true,
+      },
+    });
   }
 }

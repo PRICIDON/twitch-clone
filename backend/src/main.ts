@@ -10,7 +10,7 @@ import { ms, StringValue } from "./shared/utils/ms.util";
 import { parseBoolean } from "./shared/utils/parse-boolean.util";
 import { RedisService } from "./core/redis/redis.service";
 async function bootstrap() {
-  const app = await NestFactory.create(CoreModule);
+  const app = await NestFactory.create(CoreModule, { rawBody: true });
   const redis = app.get(RedisService);
   const config = app.get(ConfigService);
 
