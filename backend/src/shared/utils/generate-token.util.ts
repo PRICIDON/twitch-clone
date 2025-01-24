@@ -52,7 +52,7 @@ export async function generateToken(
     include: {
       user: {
         include: {
-          notificationsSettings: true,
+          notificationSettings: true,
         },
       },
     },

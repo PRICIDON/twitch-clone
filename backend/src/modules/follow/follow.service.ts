@@ -77,13 +77,13 @@ export class FollowService {
         follower: true,
         following: {
           include: {
-            notificationsSettings: true,
+            notificationSettings: true,
           },
         },
       },
     });
 
-    if (follow.following.notificationsSettings.siteNotifications) {
+    if (follow.following.notificationSettings.siteNotifications) {
       await this.notificationService.createNewFollowing(
         follow.following.id,
         follow.follower,
@@ -91,7 +91,7 @@ export class FollowService {
     }
 
     if (
-      follow.following.notificationsSettings.telegramNotifications &&
+      follow.following.notificationSettings.telegramNotifications &&
       follow.following.telegramId
     ) {
       await this.telegramService.sendNewFollowing(

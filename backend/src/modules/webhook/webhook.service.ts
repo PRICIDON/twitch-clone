@@ -43,7 +43,7 @@ export class WebhookService {
             user: true,
             channel: {
               include: {
-                notificationsSettings: true,
+                notificationSettings: true,
               },
             },
           },
@@ -60,7 +60,7 @@ export class WebhookService {
       });
 
       if (
-        sponsorshipSubscription.channel.notificationsSettings.siteNotifications
+        sponsorshipSubscription.channel.notificationSettings.siteNotifications
       ) {
         await this.notificationService.createNewSponsorship(
           sponsorshipSubscription.channel.id,
@@ -69,7 +69,7 @@ export class WebhookService {
         );
       }
       if (
-        sponsorshipSubscription.channel.notificationsSettings
+        sponsorshipSubscription.channel.notificationSettings
           .telegramNotifications &&
         sponsorshipSubscription.user.telegramId
       ) {
@@ -141,7 +141,7 @@ export class WebhookService {
         include: {
           follower: {
             include: {
-              notificationsSettings: true,
+              notificationSettings: true,
             },
           },
         },
@@ -149,14 +149,14 @@ export class WebhookService {
       for (const follow of followers) {
         const follower = follow.follower;
 
-        if (follower.notificationsSettings.siteNotifications) {
+        if (follower.notificationSettings.siteNotifications) {
           await this.notificationService.createStreamStart(
             follower.id,
             stream.user,
           );
         }
         if (
-          follower.notificationsSettings.telegramNotifications &&
+          follower.notificationSettings.telegramNotifications &&
           follower.telegramId
         ) {
           await this.telegramService.sendStreamStart(

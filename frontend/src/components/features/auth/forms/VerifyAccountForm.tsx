@@ -6,16 +6,18 @@ import {useVerifyAccountMutation} from "@/graphql/generated/output";
 import {toast} from "sonner";
 import AuthWrapper from "@/components/features/auth/AuthWrapper";
 import {Loader} from "lucide-react";
+import {useAuth} from "@/hooks/useAuth";
 
 
 export default function VerifyAccountForm() {
     const t = useTranslations("auth.verify");
     const router = useRouter()
     const searchParams = useSearchParams();
-
+    const {auth} = useAuth()
     const token = searchParams.get("token") ?? '';
     const [verify] = useVerifyAccountMutation({
         onCompleted() {
+            auth()
             toast.success(t('successMessage'))
             router.push('/dashboard/settings')
         },

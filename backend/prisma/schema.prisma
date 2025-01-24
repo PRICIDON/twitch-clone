@@ -31,12 +31,12 @@ model User {
   isDeactivated Boolean   @default(false) @map("is_deactivated")
   deactivatedAt DateTime? @map("deactivated_at")
 
-  tokens                Token[]
-  socialLink            SocialLink[]
-  stream                Stream?
-  chatMessages          ChatMessage[]
-  notifications         Notification[]
-  notificationsSettings NotificationSettings?
+  tokens               Token[]
+  socialLink           SocialLink[]
+  stream               Stream?
+  chatMessages         ChatMessage[]
+  notifications        Notification[]
+  notificationSettings NotificationSettings?
 
   followers  Follow[] @relation(name: "followers")
   followings Follow[] @relation(name: "followings")

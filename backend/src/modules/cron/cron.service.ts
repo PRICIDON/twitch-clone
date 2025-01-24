@@ -28,14 +28,14 @@ export class CronService {
         },
       },
       include: {
-        notificationsSettings: true,
+        notificationSettings: true,
         stream: true,
       },
     });
 
     for (const user of deactivatedAccounts) {
       await this.mailService.sendAccountDeletion(user.email);
-      if (user.notificationsSettings.telegramNotifications && user.telegramId) {
+      if (user.notificationSettings.telegramNotifications && user.telegramId) {
         await this.telegramService.sendAccountDeletion(user.telegramId);
       }
 
@@ -62,17 +62,17 @@ export class CronService {
         isTotpEnabled: false,
       },
       include: {
-        notificationsSettings: true,
+        notificationSettings: true,
       },
     });
 
     for (const user of users) {
       // await this.mailService.sendEnableTwoFactor(user.email);
 
-      if (user.notificationsSettings.siteNotifications) {
+      if (user.notificationSettings.siteNotifications) {
         await this.notificationService.createEnableTwoFactor(user.id);
       }
-      if (user.notificationsSettings.telegramNotifications && user.telegramId) {
+      if (user.notificationSettings.telegramNotifications && user.telegramId) {
         await this.telegramService.sendEnableTwoFactor(user.telegramId);
       }
     }
@@ -81,7 +81,7 @@ export class CronService {
   public async verifyChannels() {
     const users = await this.prismaService.user.findMany({
       include: {
-        notificationsSettings: true,
+        notificationSettings: true,
       },
     });
 
@@ -104,12 +104,12 @@ export class CronService {
 
         await this.mailService.sendVerifyChannel(user.email);
 
-        if (user.notificationsSettings.siteNotifications) {
+        if (user.notificationSettings.siteNotifications) {
           await this.notificationService.createVerifyChannel(user.id);
         }
 
         if (
-          user.notificationsSettings.telegramNotifications &&
+          user.notificationSettings.telegramNotifications &&
           user.telegramId
         ) {
           await this.telegramService.sendVerifyChannel(user.telegramId);

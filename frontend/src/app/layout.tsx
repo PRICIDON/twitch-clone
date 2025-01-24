@@ -6,6 +6,7 @@ import {NextIntlClientProvider} from "next-intl";
 import {getLocale, getMessages} from "next-intl/server";
 import {ThemeProvider} from "@/providers/ThemeProvider";
 import {ToasterProvider} from "@/providers/ToastProvider";
+import React from "react";
 
 
 

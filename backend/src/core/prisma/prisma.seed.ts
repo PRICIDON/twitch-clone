@@ -71,7 +71,7 @@ async function main() {
                   ],
                 },
               },
-              notificationsSettings: {
+              notificationSettings: {
                 create: {},
               },
             },
