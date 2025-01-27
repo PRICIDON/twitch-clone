@@ -1,16 +1,13 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { ChannelService } from "./channel.service";
 import { UserModel } from "../auth/account/models/user.model";
-import { Authorization } from "../../shared/decocators/auth.decorator";
 import { SubscriptionModel } from "../sponsorship/subscription/models/subscription.model";
-import { Authorized } from "../../shared/decocators/authorized.decorator";
-import { User } from "../../../prisma/generated";
 
 @Resolver("Channel")
 export class ChannelResolver {
   constructor(private readonly channelService: ChannelService) {}
 
-  @Query(() => [UserModel], { name: "findRecommendedChannel" })
+  @Query(() => [UserModel], { name: "findRecommendedChannels" })
   async findRecommendedChannel() {
     return this.channelService.findRecommendedChannel();
   }

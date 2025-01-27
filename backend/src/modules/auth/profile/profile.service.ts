@@ -17,46 +17,56 @@ export class ProfileService {
     private readonly storageService: StorageService,
   ) {}
 
-  async changeAvatar(user: User, file: Upload) {
-    if (user.avatar) {
-      await this.storageService.remove(user.avatar);
-    }
+  public async changeAvatar(user: User, file: Upload) {
+		if (user.avatar) {
+			await this.storageService.remove(user.avatar)
+		}
 
-    const chunks: Buffer[] = [];
+		const chunks: Buffer[] = []
 
-    for await (const chunk of file.createReadStream()) {
-      chunks.push(chunk);
-    }
+		for await (const chunk of file.createReadStream()) {
+			chunks.push(chunk)
+		}
 
-    const buffer = Buffer.concat(chunks);
+		const buffer = Buffer.concat(chunks)
 
-    const fileName = `/channels/${user.username}.webp`;
+		const fileName = `/channels/${user.username}.webp`
 
-    if (file.filename && file.filename.endsWith(".gif")) {
-      const processedBuffer = await sharp(buffer, { animated: true })
-        .resize(512, 512)
-        .webp()
-        .toBuffer();
+		if (file.filename && file.filename.endsWith('.gif')) {
+			const processedBuffer = await sharp(buffer, { animated: true })
+				.resize(512, 512)
+				.webp()
+				.toBuffer()
 
-      await this.storageService.upload(processedBuffer, fileName, "image/webp");
-    } else {
-      const processedBuffer = await sharp(buffer)
-        .resize(512, 512)
-        .webp()
-        .toBuffer();
+			await this.storageService.upload(
+				processedBuffer,
+				fileName,
+				'image/webp'
+			)
+		} else {
+			const processedBuffer = await sharp(buffer)
+				.resize(512, 512)
+				.webp()
+				.toBuffer()
 
-      await this.storageService.upload(processedBuffer, fileName, "image/webp");
-    }
+			await this.storageService.upload(
+				processedBuffer,
+				fileName,
+				'image/webp'
+			)
+		}
 
-    await this.prismaService.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        avatar: fileName,
-      },
-    });
-  }
+		await this.prismaService.user.update({
+			where: {
+				id: user.id
+			},
+			data: {
+				avatar: fileName
+			}
+		})
+
+		return true
+	}
 
   async removeAvatar(user: User) {
     if (!user.avatar) return;

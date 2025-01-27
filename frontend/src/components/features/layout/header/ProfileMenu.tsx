@@ -53,7 +53,7 @@ export default function ProfileMenu() {
 								{t('channel')}
 							</DropdownMenuItem>
 						</Link>
-						<Link href={`/dashboard/settings}`}>
+						<Link href={`/dashboard/settings`}>
 							<DropdownMenuItem>
 								<LayoutDashboard className="size-2 mr-2"/>
 								{t('dashboard')}

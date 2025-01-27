@@ -1,10 +1,13 @@
-import { cva, type VariantProps } from 'class-variance-authority'
-import { FindProfileQuery } from '@/graphql/generated/output'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/common/avatar'
-import { cn } from '@/utils/tw-merge'
-import { getMediaSource } from '@/utils/get-media-source'
+import { type VariantProps, cva } from 'class-variance-authority'
 
-const avatarSizes=cva("", {
+import { FindProfileQuery } from '@/graphql/generated/output'
+
+import { getMediaSource } from '@/utils/get-media-source'
+import { cn } from '@/utils/tw-merge'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/common/avatar'
+
+
+const avatarSizes = cva('', {
 	variants: {
 		size: {
 			sm: 'size-7',
@@ -23,14 +26,28 @@ interface ChannelAvatarProps extends VariantProps<typeof avatarSizes> {
 	isLive?: boolean
 }
 
-export function ChannelAvatar({channel,size,isLive} : ChannelAvatarProps) {
-	return <div className="relative">
-		<Avatar className={cn(avatarSizes({size}), isLive && 'ring-2 ring-rose-500')}>
-			<AvatarImage src={getMediaSource(channel.avatar!)} alt={channel.username} className="object-cover" />
-			<AvatarFallback className={cn(
+export function ChannelAvatar({ size, channel, isLive }: ChannelAvatarProps) {
+	return (
+		<div className='relative'>
+			<Avatar
+				className={cn(
+					avatarSizes({ size }),
+					isLive && 'ring-2 ring-rose-500'
+				)}
+			>
+				<AvatarImage
+					src={getMediaSource(channel.avatar)}
+					className='object-cover'
+				/>
+				<AvatarFallback
+					className={cn(
 						size === 'xl' && 'text-4xl',
 						size === 'lg' && 'text-2xl'
-					)}>{channel.username[0]}</AvatarFallback>
-		</Avatar>
-	</div>
+					)}
+				>
+					{channel.username?.[0]}
+				</AvatarFallback>
+			</Avatar>
+		</div>
+	)
 }
