@@ -1,7 +1,7 @@
 import React from 'react'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
-import UserSettings from '@/components/features/auth/user/UserSettings'
+import UserSettings from '@/components/features/user/UserSettings'
 
 export async function generateMetadata(): Promise<Metadata> {
     const t = await getTranslations("dashboard.settings.header")

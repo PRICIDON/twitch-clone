@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
+import "../styles/themes.css";
 import {GeistSans} from 'geist/font/sans'
 import ApolloClientProvider from "@/providers/ApolloClientProvider";
 import {NextIntlClientProvider} from "next-intl";
@@ -7,6 +8,7 @@ import {getLocale, getMessages} from "next-intl/server";
 import {ThemeProvider} from "@/providers/ThemeProvider";
 import {ToasterProvider} from "@/providers/ToastProvider";
 import React from "react";
+
 
 
 
