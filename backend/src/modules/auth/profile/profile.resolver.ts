@@ -57,7 +57,7 @@ export class ProfileResolver {
   }
 
   @Authorization()
-  @Mutation(() => Boolean, { name: "reorderSocialLink" })
+  @Mutation(() => Boolean, { name: "reorderSocialLinks" })
   async reorderSocialLinks(
     @Authorized() user: User,
     @Args("list", { type: () => [SocialLinkOrderInput] })

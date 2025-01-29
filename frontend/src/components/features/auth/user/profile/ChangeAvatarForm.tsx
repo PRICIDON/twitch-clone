@@ -1,78 +1,155 @@
 'use client'
 
-import React, { ChangeEvent, useRef } from 'react'
-import { useTranslations } from 'next-intl'
-import { useCurrent } from '@/hooks/useCurrent'
-import { Skeleton } from '@/components/ui/common/skeleton'
-import { useForm } from 'react-hook-form'
-import { TypeUploadFileSchema, UploadFileSchema } from '@/schemas/auth/upload-file.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { getMediaSource } from '@/utils/get-media-source'
-import FormWrapper from '@/components/ui/elements/FormWrapper'
-import Form from 'next/form'
-import { FormField } from '@/components/ui/common/Form'
-import { ChannelAvatar } from '@/components/ui/elements/ChannelAvatar'
-import { Button } from '@/components/ui/common/Button'
-import { useChangeProfileAvatarMutation } from '@/graphql/generated/output'
+import { Trash } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import { type ChangeEvent, useRef } from 'react'
+import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+
+import { Button } from '@/components/ui/common/Button'
+import { Form, FormField } from '@/components/ui/common/Form'
+import { Skeleton } from '@/components/ui/common/skeleton'
+import { ChannelAvatar } from '@/components/ui/elements/ChannelAvatar'
+import ConfirmModal from '@/components/ui/elements/ConfirmModal'
+import FormWrapper from '@/components/ui/elements/FormWrapper'
+
+import {
+	useChangeProfileAvatarMutation,
+	useRemoveProfileAvatarMutation
+} from '@/graphql/generated/output'
+
+import { useCurrent } from '@/hooks/useCurrent'
+
+import {
+	type TypeUploadFileSchema,
+	uploadFileSchema
+} from '@/schemas/upload-file.schema'
 
 export default function ChangeAvatarForm() {
 	const t = useTranslations('dashboard.settings.profile.avatar')
-	const {user, isLoadingProfile, refetch} = useCurrent()
+
+	const { user, isLoadingProfile, refetch } = useCurrent()
+
 	const inputRef = useRef<HTMLInputElement>(null)
+
 	const form = useForm<TypeUploadFileSchema>({
-		resolver: zodResolver(UploadFileSchema),
+		resolver: zodResolver(uploadFileSchema),
 		values: {
 			file: user?.avatar!
 		}
 	})
-	// TODO: 5:45:33
+
+	const [update, { loading: isLoadingUpdate }] =
+		useChangeProfileAvatarMutation({
+			onCompleted() {
+				refetch()
+				toast.success(t('successUpdateMessage'))
+			},
+			onError() {
+				toast.error(t('errorUpdateMessage'))
+			}
+		})
+
+	const [remove, { loading: isLoadingRemove }] =
+		useRemoveProfileAvatarMutation({
+			onCompleted() {
+				refetch()
+				toast.success(t('successRemoveMessage'))
+			},
+			onError() {
+				toast.error(t('errorRemoveMessage'))
+			}
+		})
+
 	function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
 		const file = event.target.files?.[0]
-		if(file) {
+
+		if (file) {
 			form.setValue('file', file)
 			update({ variables: { avatar: file } })
 		}
 	}
-	const [update, {loading: isLoadingUpdate}] = useChangeProfileAvatarMutation({
-		onCompleted(){
-			refetch()
-			toast.success(t('successUpdateMessage'))
-		},
-		onError(){
-			toast.error(t('errorUpdateMessage'))
-		}
-	})
 
 	return isLoadingProfile ? (
-		<ChangeAvatarFormSkeleton/>
+		<ChangeAvatarFormSkeleton />
 	) : (
 		<FormWrapper heading={t('heading')}>
-			<Form action={''} {...form}>
-				<FormField control={form.control} name="file" render={({field}) => <div className="px-5 pb-5">
-					<div className="w-full items-center lg:flex space-x-6">
-						<ChannelAvatar channel={{
-							username: user?.username,
-							avatar: field.value instanceof File ? URL.createObjectURL(field.value) : field.value,
-						}} size="xl"/>
-						<div className="space-y-3">
-							<div className="flex items-center gap-x-3">
-								<input type="file" className="hidden" ref={inputRef} onChange={handleImageChange}/>
-								<Button variant="secondary" onClick={() => inputRef.current?.click()} disabled={isLoadingUpdate}>
-									{t('updateButton')}
-								</Button>
+			<Form {...form}>
+				<FormField
+					control={form.control}
+					name='file'
+					render={({ field }) => (
+						<div className='px-5 pb-5'>
+							<div className='w-full items-center space-x-6 lg:flex'>
+								<ChannelAvatar
+									channel={{
+										username: user?.username!,
+										avatar:
+											field.value instanceof File
+												? URL.createObjectURL(
+														field.value
+													)
+												: field.value
+									}}
+									size='xl'
+								/>
+								<div className='space-y-3'>
+									<div className='flex items-center gap-x-3'>
+										<input
+											className='hidden'
+											type='file'
+											ref={inputRef}
+											onChange={handleImageChange}
+										/>
+										<Button
+											variant='secondary'
+											onClick={() =>
+												inputRef.current?.click()
+											}
+											disabled={
+												isLoadingUpdate ||
+												isLoadingRemove
+											}
+										>
+											{t('updateButton')}
+										</Button>
+										{user?.avatar && (
+											<ConfirmModal
+												heading={t(
+													'confirmModal.heading'
+												)}
+												message={t(
+													'confirmModal.message'
+												)}
+												onConfirm={() => remove()}
+											>
+												<Button
+													variant='ghost'
+													size='lgIcon'
+													disabled={
+														isLoadingUpdate ||
+														isLoadingRemove
+													}
+												>
+													<Trash className='size-4' />
+												</Button>
+											</ConfirmModal>
+										)}
+									</div>
+									<p className='text-sm text-muted-foreground'>
+										{t('info')}
+									</p>
+								</div>
 							</div>
-							<p className="text-sm text-muted-foreground">{t('info')}</p>
 						</div>
-					</div>
-				</div>}></FormField>
+					)}
+				/>
 			</Form>
 		</FormWrapper>
 	)
 }
 
 export function ChangeAvatarFormSkeleton() {
-	return (
-		<Skeleton className="w-full h-52 "/>
-	)
+	return <Skeleton className='h-52 w-full' />
 }

@@ -13,7 +13,7 @@ import LiveBadge from '@/components/ui/elements/LiveBadge'
 import { Skeleton } from '@/components/ui/common/skeleton'
 
 interface ChannelItemProps {
-	channel:FindRecommendedChannelsQuery['findRecommendedChannel'][0],
+	channel:FindRecommendedChannelsQuery['findRecommendedChannels'][0],
 }
 
 export default function ChannelItem({channel}: ChannelItemProps) {
@@ -29,7 +29,7 @@ export default function ChannelItem({channel}: ChannelItemProps) {
 		</Hint>
 	) : (
 		<Button variant="ghost" className={cn('h-11 w-full justify-start', isActive && "bg-accent")} asChild>
-				<Link className="ml-5 flex w-full items-center" href={`/${channel.username}`}>
+				<Link className="flex w-full items-center" href={`/${channel.username}`}>
 					<ChannelAvatar channel={channel} isLive={channel.stream.isLive} size="sm"/>
 					<h2 className="truncate pl-2">{channel.username}</h2>
 					{channel.isVerified && (

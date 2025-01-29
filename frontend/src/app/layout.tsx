@@ -23,7 +23,7 @@ export default async function RootLayout({
     const locale = await getLocale();
     const messages = await getMessages();
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={GeistSans.variable}
       >

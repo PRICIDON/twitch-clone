@@ -1,5 +1,5 @@
 export const USERNAMES = [
-	'teacoder',
+	'pricidon',
 	'stintik',
 	'alex',
 	'bella',
