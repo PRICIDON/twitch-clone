@@ -6,5 +6,17 @@ query FindProfile {
     bio
     avatar
     isTotpEnabled
+    isVerified
+    notificationSettings {
+      siteNotifications
+      telegramNotifications
+    }
+    stream {
+      serverUrl
+      streamKey
+      isChatEnabled
+      isChatFollowersOnly
+      isChatPremiumFollowersOnly
+    }
   }
 }

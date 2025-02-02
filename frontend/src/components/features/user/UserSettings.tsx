@@ -11,6 +11,9 @@ import WrapperTotp from '@/components/features/user/account/totp/WrapperTotp'
 import DeactivateCard from '@/components/features/user/account/totp/DeactivateCard'
 import ChangeThemeForm from '@/components/features/user/appearance/ChangeThemeForm'
 import ChangeLanguageForm from '@/components/features/user/appearance/ChangeLanguageForm'
+import ChangeColorForm from '@/components/features/user/appearance/ChangeColorForm'
+import ChangeNotificationsSettingsForm from '@/components/features/user/notifications/ChangeNotificationsSettingsForm'
+import SessionsList from '@/components/features/user/sessions/SessionsList'
 
 export default function UserSettings() {
 	const t = useTranslations('dashboard.settings')
@@ -49,16 +52,19 @@ export default function UserSettings() {
 						<Heading title={t('appearance.header.heading')} description={t('appearance.header.description')}/>
 						<ChangeThemeForm/>
 						<ChangeLanguageForm/>
+						<ChangeColorForm/>
 					</div>
 				</TabsContent>
 				<TabsContent value="notifications">
 					<div className="mt-5 space-y-6">
 						<Heading title={t('notifications.header.heading')} description={t('notifications.header.description')}/>
+						<ChangeNotificationsSettingsForm/>
 					</div>
 				</TabsContent>
 				<TabsContent value="sessions">
 					<div className="mt-5 space-y-6">
 						<Heading title={t('sessions.header.heading')} description={t('sessions.header.description')}/>
+						<SessionsList/>
 					</div>
 				</TabsContent>
 			</Tabs>

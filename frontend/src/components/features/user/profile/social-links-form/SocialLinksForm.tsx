@@ -48,8 +48,6 @@ export default function SocialLinksForm() {
 	}
 	const {isValid} = form.formState
 
-	//TODO: 6:25:42
-
 	return isLoadingLinks ? <SocialLinksFormSkeleton/> : (
 		<FormWrapper heading={t('heading')}>
 			<Form {...form}>

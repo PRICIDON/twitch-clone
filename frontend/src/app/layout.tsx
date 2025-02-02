@@ -8,6 +8,7 @@ import {getLocale, getMessages} from "next-intl/server";
 import {ThemeProvider} from "@/providers/ThemeProvider";
 import {ToasterProvider} from "@/providers/ToastProvider";
 import React from "react";
+import ColorSwitcher from '@/components/ui/elements/ColorSwitcher'
 
 
 
@@ -29,11 +30,12 @@ export default async function RootLayout({
       <body
         className={GeistSans.variable}
       >
+      <ColorSwitcher />
       <ApolloClientProvider>
           <NextIntlClientProvider messages={messages}>
               <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
-                      {children}
                   <ToasterProvider />
+                  {children}
               </ThemeProvider>
           </NextIntlClientProvider>
 
