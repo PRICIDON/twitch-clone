@@ -1,0 +1,32 @@
+'use client'
+
+import React, { CSSProperties } from 'react'
+import { type FindChannelByUsernameQuery } from '@/graphql/generated/output'
+import { useTranslations } from 'next-intl'
+import { Card } from '@/components/ui/common/Card'
+import { WifiOff } from 'lucide-react'
+import { getMediaSource } from '@/utils/get-media-source'
+
+interface OfflineStreamProps {
+	channel: FindChannelByUsernameQuery['findChannelByUsername']
+}
+
+export default function OfflineStream({ channel }: OfflineStreamProps) {
+	const t = useTranslations('stream')
+	const backgroundStyle: CSSProperties = channel.stream.thumbnailUrl ? {
+		backgroundSize: 'cover',
+		backgroundPosition: 'center',
+		backgroundImage: `url(${getMediaSource(channel.stream.thumbnailUrl)})`
+	} : {
+
+	}
+	return (
+		<Card className="flex h-full flex-col items-center justify-center" style={backgroundStyle}>
+			{channel.stream.thumbnailUrl && (
+				<div className="absolute inset-0 z-0 rounded-lg bg-black opacity-60"/>
+			)}
+			<WifiOff className="z-10 size-12 text-muted-foreground"/>
+			<p className="text-white mt-3 z-10 text-lg">{channel.displayName} {t('video.offline')}</p>
+		</Card>
+	)
+}

@@ -1,0 +1,22 @@
+query FindCategoryBySlug($slug: String!) {
+    findCategoryBySlug(slug: $slug) {
+        thumbnailUrl
+        title
+        slug
+        description
+        streams {
+            title
+            thumbnailUrl
+            isLive
+            user {
+                avatar
+                username
+                isVerified
+            }
+            category {
+                title
+                slug
+            }
+        }
+    }
+}

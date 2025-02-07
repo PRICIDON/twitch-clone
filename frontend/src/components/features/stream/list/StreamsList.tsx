@@ -1,7 +1,9 @@
+
 import React from 'react'
 import { FindRandomStreamsQuery } from '@/graphql/generated/output'
 import { Heading } from '@/components/ui/elements/Heading'
 import StreamCard from '@/components/features/stream/list/StreamCard'
+import EmptyState from '@/components/ui/elements/EmptyState'
 
 interface StreamsListProps {
 	heading?: string;
@@ -18,5 +20,5 @@ export default function StreamsList({heading, streams}: StreamsListProps) {
 				))}
 			</div>
 		</>
-	) : (<div>Not Found</div>)
+	) : <EmptyState/>
 }

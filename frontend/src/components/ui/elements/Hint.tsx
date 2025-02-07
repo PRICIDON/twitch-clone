@@ -5,10 +5,10 @@ interface HintProps {
 	label: string
 	side?: 'top' | 'bottom' | 'left' | 'right'
 	align?: 'start' | 'center' | 'end'
+	asChild?: boolean
 }
 
-// @ts-ignore
-function Hint({  asChild ,children, label, side, align} : PropsWithChildren<HintProps>) {
+function Hint({ asChild ,children, label, side, align} : PropsWithChildren<HintProps>) {
 	return (
 		<TooltipProvider>
 			<Tooltip delayDuration={0}>

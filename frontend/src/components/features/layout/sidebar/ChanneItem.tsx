@@ -21,7 +21,6 @@ export default function ChannelItem({channel}: ChannelItemProps) {
 	const {isCollapsed} = useSidebar()
 	const isActive = pathname === `/${channel.username}`
 	return isCollapsed ? (
-		// @ts-ignore
 		<Hint label={channel.username} side="right" asChild>
 				<Link className="mt-3 flex w-full items-center justify-center" href={`/${channel.username}`}>
 					<ChannelAvatar channel={channel} isLive={channel.stream.isLive}/>
