@@ -1,12 +1,10 @@
 import React from 'react'
 import type { FindChannelByUsernameQuery } from '@/graphql/generated/output'
-import { useTranslations } from 'next-intl'
 import FollowButton from '@/components/features/stream/overview/info/FollowButton'
 import SupportButton from '@/components/features/stream/overview/info/SupportButton'
 import ShareActions from '@/components/features/stream/overview/info/ShareActions'
 import { Skeleton } from '@/components/ui/common/skeleton'
 import StreamSettings from '@/components/features/stream/settings/StreamSettings'
-import { useCurrent } from '@/hooks/useCurrent'
 
 interface StreamActionsProps {
 	channel: FindChannelByUsernameQuery['findChannelByUsername']
