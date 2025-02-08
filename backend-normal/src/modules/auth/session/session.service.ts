@@ -137,7 +137,8 @@ export class SessionService {
 
 	public async clearSession(req: Request) {
 		req.res.clearCookie(
-			this.configService.get('SESSION_NAME')
+			this.configService.get('SESSION_NAME'),
+			{ secure: true }
 		)
 
 		return true
