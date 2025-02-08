@@ -8,7 +8,7 @@ import { PrismaService } from '@/src/core/prisma/prisma.service'
 import type { SessionMetadata } from '@/src/shared/types/session-metadata.types'
 
 import { BUTTONS } from './telegram.buttons'
-import { MESSAGES } from './telegram.messages'
+import { MESSAGES } from './telegram.message'
 
 @Update()
 @Injectable()
