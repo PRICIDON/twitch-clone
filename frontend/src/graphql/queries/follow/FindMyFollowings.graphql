@@ -2,6 +2,7 @@ query FindMyFollowings {
     findMyFollowings {
         followingId
         following {
+            id
             username
             avatar
             isVerified

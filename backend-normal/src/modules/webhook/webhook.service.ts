@@ -22,12 +22,12 @@ export class WebhookService {
 	) {}
 
 	public async receiveWebhookLivekit(body: string, authorization: string) {
+		// console.log("Тело:", body, typeof body)
 		const event = this.livekitService.receiver.receive(
 			body,
 			authorization,
 			true
 		)
-		console.log(event)
 		if (event.event == 'ingress_started') {
 			const stream = await this.prismaService.stream.update({
 				where: {
@@ -99,7 +99,7 @@ export class WebhookService {
 
 	public async receiveWebhookStripe(event: Stripe.Event) {
 		const session = event.data.object as Stripe.Checkout.Session
-
+		console.log(session, typeof session)
 		if (event.type === 'checkout.session.completed') {
 			const planId = session.metadata.planId
 			const userId = session.metadata.userId

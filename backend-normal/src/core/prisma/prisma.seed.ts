@@ -10,7 +10,7 @@ import { USERNAMES } from './data/users.data'
 const prisma = new PrismaClient({
 	transactionOptions: {
 		maxWait: 5000,
-		timeout: 10000,
+		timeout: 1000000,
 		isolationLevel: Prisma.TransactionIsolationLevel.Serializable
 	}
 })

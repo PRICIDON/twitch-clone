@@ -6,7 +6,6 @@ import {
 import { SERVER_URL } from '@/libs/constants/url.constants'
 import { Metadata } from 'next'
 import { getMediaSource } from '@/utils/get-media-source'
-import CategoryOverview from '@/components/features/category/overview/CategoryOverview'
 import StreamOverview from '@/components/features/stream/overview/StreamOverview'
 
 async function findChannelByUsername(params: { username:string}) {

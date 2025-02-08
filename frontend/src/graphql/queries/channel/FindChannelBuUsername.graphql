@@ -14,11 +14,13 @@ query FindChannelByUsername($username: String!) {
             thumbnailUrl
             isLive
             title
+            id
             isChatPremiumFollowersOnly
             isChatEnabled
             isChatFollowersOnly
             category {
                 title
+                id
             }
         }
         sponsorshipPlans {

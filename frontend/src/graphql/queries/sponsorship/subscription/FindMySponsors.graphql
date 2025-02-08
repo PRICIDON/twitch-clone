@@ -3,6 +3,7 @@ query FindMySponsors {
         createdAt
         expiresAt
         user {
+            id
             username
             avatar
             isVerified

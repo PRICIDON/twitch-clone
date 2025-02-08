@@ -5,7 +5,7 @@ import RedisStore from 'connect-redis'
 import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session'
 import * as graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js'
-
+import * as express from 'express';
 import { CoreModule } from './core/core.module'
 import { RedisService } from './core/redis/redis.service'
 import { ms, type StringValue } from './shared/utils/ms.util'
@@ -55,6 +55,9 @@ async function bootstrap() {
 		credentials: true,
 		exposedHeaders: ['set-cookie']
 	})
+	app.use('/webhook/stripe', express.raw({ type: 'application/json' }));
+	console.log('Middleware express.raw() для Stripe установлен');
+
 
 	await app.listen(config.getOrThrow<number>('APPLICATION_PORT'))
 }

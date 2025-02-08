@@ -5,19 +5,21 @@ import FollowButton from '@/components/features/stream/overview/info/FollowButto
 import SupportButton from '@/components/features/stream/overview/info/SupportButton'
 import ShareActions from '@/components/features/stream/overview/info/ShareActions'
 import { Skeleton } from '@/components/ui/common/skeleton'
+import StreamSettings from '@/components/features/stream/settings/StreamSettings'
+import { useCurrent } from '@/hooks/useCurrent'
 
 interface StreamActionsProps {
 	channel: FindChannelByUsernameQuery['findChannelByUsername']
 }
 
 export default function StreamActions({channel}: StreamActionsProps) {
-	const t = useTranslations('stream.actions')
-	return (
+ 	return (
 		<div className="space-y-4 space-x-3 lg:mt-0 mr-5 items-center lg:flex lg:space-y-0">
 			<FollowButton channel={channel} />
 			{channel.isVerified && channel.sponsorshipPlans.length && (
 				<SupportButton channel={channel} />
 			)}
+			<StreamSettings channel={channel} />
 			<ShareActions channel={channel}/>
 		</div>
 	)

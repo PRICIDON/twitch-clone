@@ -8,7 +8,7 @@ import ToggleCard, { ToggleCardSkeleton } from '@/components/ui/elements/ToggleC
 import { Form, FormField } from '@/components/ui/common/Form'
 import { useChangeChatSettingsMutation } from '@/graphql/generated/output'
 import { toast } from 'sonner'
-import { changeChatSettingsSchema, TypeChangeChatSettingsSchema } from '@/schemas/stream/change-chat-settings.schema'
+import { changeChatSettingsSchema, TypeChangeChatSettingsSchema } from '@/schemas/chat/change-chat-settings.schema'
 import { Heading } from '@/components/ui/elements/Heading'
 
 export default function ChangeChatSettings() {
@@ -72,7 +72,7 @@ export default function ChangeChatSettings() {
 							description={t('isChatPremiumFollowersOnly.description')}
 							value={field.value}
 							onChange={value => onChange('isChatPremiumFollowersOnly', value)}
-							isDisabled={isLoadingUpdate}
+							isDisabled={isLoadingUpdate || !user?.isVerified}
 						/>
 					)}/>
 				</Form>)}

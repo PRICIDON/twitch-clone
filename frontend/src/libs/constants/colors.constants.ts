@@ -34,3 +34,5 @@ export const BASE_COLORS = [
 ] as const
 
 export type TypeBaseColor = (typeof BASE_COLORS)[number]['name']
+
+
