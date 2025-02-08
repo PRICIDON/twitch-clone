@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, split } from '@apollo/client'
+import { ApolloClient, ApolloLink, InMemoryCache, split } from '@apollo/client'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { getMainDefinition } from '@apollo/client/utilities'
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs'
@@ -11,7 +11,7 @@ const httpLink = createUploadLink({
 	headers: {
 		'apollo-require-preflight': 'true'
 	}
-})
+}) as unknown as ApolloLink
 
 const wsLink = new WebSocketLink({
 	uri: WEBSOCKET_URL,
