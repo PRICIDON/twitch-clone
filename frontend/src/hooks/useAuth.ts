@@ -1,6 +1,4 @@
-'use client'
 import {authStore} from "@/store/auth/auth.store";
-import { cookies } from 'next/headers'
 
 export function useAuth() {
     const isAuthenticated = authStore(state => state.isAuthenticated)
@@ -8,7 +6,6 @@ export function useAuth() {
 
     const auth = () => setIsAuthenticated(true)
     const exit = () => {
-        cookies().then(r => r.delete('session'))
         setIsAuthenticated(false)
     }
 
