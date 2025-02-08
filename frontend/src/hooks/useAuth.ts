@@ -1,3 +1,4 @@
+'use client'
 import {authStore} from "@/store/auth/auth.store";
 import { cookies } from 'next/headers'
 
