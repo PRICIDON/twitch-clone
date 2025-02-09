@@ -42,7 +42,13 @@ export function destroySession(req: Request, configService: ConfigService) {
 			}
 
 			req.res.clearCookie(
-				configService.getOrThrow<string>('SESSION_NAME')
+				configService.getOrThrow<string>('SESSION_NAME'),
+				{
+					secure: true,
+					httpOnly: true,
+					path: '/',
+					domain: '.pricidon.ru'
+				}
 			)
 
 			resolve(true)

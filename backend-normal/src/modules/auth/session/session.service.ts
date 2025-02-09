@@ -138,7 +138,12 @@ export class SessionService {
 	public async clearSession(req: Request) {
 		req.res.clearCookie(
 			this.configService.get('SESSION_NAME'),
-			{ secure: true }
+			{
+				secure: true,
+				httpOnly: true,
+				path: '/',
+        		domain: '.pricidon.ru'
+			}
 		)
 
 		return true
