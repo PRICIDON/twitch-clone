@@ -14,7 +14,7 @@ export default function StreamActions({channel}: StreamActionsProps) {
  	return (
 		<div className="space-y-4 space-x-3 lg:mt-0 mr-5 items-center lg:flex lg:space-y-0">
 			<FollowButton channel={channel} />
-			{channel.isVerified && channel.sponsorshipPlans.length && (
+			{(channel.isVerified && channel.sponsorshipPlans.length) && (
 				<SupportButton channel={channel} />
 			)}
 			<StreamSettings channel={channel} />
