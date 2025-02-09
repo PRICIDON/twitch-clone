@@ -8,7 +8,7 @@ RUN npm install --force
 
 COPY . .
 
-RUN npm graphql-codegen --config graphql.config.ts
+RUN npm run graphql-codegen --config graphql.config.ts
 
 RUN npm run build
 
