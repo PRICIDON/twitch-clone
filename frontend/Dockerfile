@@ -1,14 +1,20 @@
 FROM node:20.17.0-alpine AS base
 
+RUN apk add --no-cache curl bash
+
+RUN curl -fsSL https://bun.sh/install | bash
+
+ENV PATH="/root/.bun/bin:$PATH"
+
 WORKDIR /app
 
-COPY package.json ./
+COPY package.json bun.lock ./
 
 RUN npm install --force
 
 COPY . .
 
-RUN npm run graphql-codegen --config graphql.config.ts
+RUN bun graphql-codegen --config graphql.config.ts
 
 RUN npm run build
 
